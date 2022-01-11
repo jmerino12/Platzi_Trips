@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:platzi_trips_avanzado/User/bloc/bloc_user.dart';
 import 'package:platzi_trips_avanzado/User/ui/screens/signin_screen.dart';
 import 'package:platzi_trips_avanzado/platzi_trips.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
