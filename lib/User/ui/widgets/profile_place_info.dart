@@ -30,7 +30,7 @@ class ProfilePlaceInfo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                this.place.where,
+                this.place.description,
                 style: const TextStyle(
                     color: Color.fromRGBO(0, 0, 0, 0.4),
                     fontFamily: 'Lato',

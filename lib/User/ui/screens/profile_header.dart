@@ -43,7 +43,7 @@ class ProfileHeader extends StatelessWidget {
       );
     } else {
       print(snapshot);
-      user  = User(name: snapshot.data.displayName, email: snapshot.data.email, photoUrl: snapshot.data.photoURL);
+      user  = User(uid: snapshot.data.uid, name: snapshot.data.displayName, email: snapshot.data.email, photoUrl: snapshot.data.photoURL);
       const title = const Text(
         'Profile',
         style: TextStyle(
