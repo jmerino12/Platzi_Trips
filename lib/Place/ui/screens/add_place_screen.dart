@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:platzi_trips_avanzado/Place/ui/widgets/title_input_locaction.dart';
 import 'package:platzi_trips_avanzado/widgets/gradient_back.dart';
 import 'package:platzi_trips_avanzado/widgets/text_input.dart';
 import 'package:platzi_trips_avanzado/widgets/title_header.dart';
@@ -51,6 +53,7 @@ class _AddPlaceScreen extends State<AddPlaceScreen> {
             ],
           ),
           Container(
+            alignment: Alignment.center,
             margin: EdgeInsets.only(top: 120, bottom: 20),
             child: ListView(
               children: [
@@ -59,7 +62,7 @@ class _AddPlaceScreen extends State<AddPlaceScreen> {
                   margin: EdgeInsets.only(bottom: 20),
                   child: TextInput(
                       hintText: "Title",
-                      inputType: null,
+                      inputType: TextInputType.text,
                       maxLines: 1,
                       controller: _controllerTitlePlace),
                 ),
@@ -67,7 +70,14 @@ class _AddPlaceScreen extends State<AddPlaceScreen> {
                     hintText: "Description",
                     inputType: TextInputType.multiline,
                     controller: _controllerDescriptionPlace,
-                    maxLines: 4)
+                    maxLines: 4),
+                Container(
+                  margin: EdgeInsets.only(top: 20),
+                  child: TextInputLocation(
+                    hintText: "Add location",
+                    iconData: Icons.location_on,
+                  ),
+                )
               ],
             ),
           )
