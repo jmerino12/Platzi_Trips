@@ -15,10 +15,12 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreen extends State<SignInScreen> {
   late UserBloc userBloc;
+  late double screenWidth;
 
   @override
   Widget build(BuildContext context) {
     userBloc = BlocProvider.of(context);
+    screenWidth = MediaQuery.of(context).size.width;
     return _handleCurrentSession();
   }
 
@@ -26,10 +28,10 @@ class _SignInScreen extends State<SignInScreen> {
     return StreamBuilder(
       stream: userBloc.authStatus,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if(!snapshot.hasData || snapshot.hasError){
+        if (!snapshot.hasData || snapshot.hasError) {
           return signInGoogleUi();
-        }else{
-         return PlatziTrips();
+        } else {
+          return PlatziTrips();
         }
       },
     );
@@ -40,16 +42,20 @@ class _SignInScreen extends State<SignInScreen> {
       body: Stack(
         alignment: Alignment.center,
         children: [
-          GradientBack("", MediaQuery.of(context).size.height),
+          GradientBack(height: null),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text("Welcome \n This is your Travel App",
-                  style: TextStyle(
-                      fontSize: 37.0,
-                      fontFamily: "Lato",
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold)),
+              Flexible(
+                  child: Container(
+                width: screenWidth,
+                child: Text("Welcome \n This is your Travel App",
+                    style: TextStyle(
+                        fontSize: 37.0,
+                        fontFamily: "Lato",
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold)),
+              )),
               ButtonGreen(
                   text: "Login with Gmail",
                   onPressed: () {
