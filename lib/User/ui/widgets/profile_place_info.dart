@@ -30,35 +30,32 @@ class ProfilePlaceInfo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
+                this.place.name,
+                style: const TextStyle(
+                    color: Color.fromRGBO(0, 0, 0, 0.4),
+                    fontFamily: 'Lato',
+                    fontSize: 12.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              Text(
                 this.place.description,
                 style: const TextStyle(
                     color: Color.fromRGBO(0, 0, 0, 0.4),
                     fontFamily: 'Lato',
                     fontSize: 12.0,
-                    fontWeight: FontWeight.bold
-                ),
-              ),
-              Text(
-                this.place.type,
-                style: const TextStyle(
-                    color: Color.fromRGBO(0, 0, 0, 0.4),
-                    fontFamily: 'Lato',
-                    fontSize: 12.0,
-                    fontWeight: FontWeight.bold
-                ),
+                    fontWeight: FontWeight.bold),
               )
             ]
         )
     );
 
     final steps = Text(
-      'Steps ${this.place.steps}',
+      'Hearts ${this.place.likes}',
       style: const TextStyle(
           fontFamily: 'Lato',
           fontSize: 14.0,
           fontWeight: FontWeight.bold,
-          color: Colors.amber
-      ),
+          color: Colors.amber),
     );
 
     final card = Container(
