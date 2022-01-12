@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class TextInput extends StatelessWidget {
   final String hintText;
-  final TextInputType inputType;
+  final TextInputType? inputType;
   final TextEditingController controller;
   int? maxLines = 1;
 
   TextInput(
       {Key? key,
       required this.hintText,
-      required this.inputType,
+      this.inputType,
       required this.controller,
       this.maxLines});
 
