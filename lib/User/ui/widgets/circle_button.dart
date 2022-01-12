@@ -23,14 +23,15 @@ class _CircleButton extends State<CircleButton> {
     return Expanded(
         child: FloatingActionButton(
           backgroundColor: widget.color,
-          mini: widget.mini,
-          onPressed: widget.onPressed,
-          child: Icon(
-            widget.icon,
-            size: widget.iconSize,
-            color: Color(0xFF4268D3),
-          ),
-        )
+      mini: widget.mini,
+      onPressed: widget.onPressed,
+      child: Icon(
+        widget.icon,
+        size: widget.iconSize,
+        color: Color(0xFF4268D3),
+      ),
+      heroTag: null,
+    )
     );
   }
 }
