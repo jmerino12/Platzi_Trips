@@ -1,9 +1,14 @@
-import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class FloatingButtonGreen extends StatefulWidget {
+  late final IconData iconData;
+  late final VoidCallback onPressed;
+
+  FloatingButtonGreen(
+      {Key? key, required this.iconData, required this.onPressed});
+
   @override
   State<StatefulWidget> createState() {
     return _FloatingButtonGreen();
@@ -12,25 +17,6 @@ class FloatingButtonGreen extends StatefulWidget {
 
 class _FloatingButtonGreen extends State<FloatingButtonGreen> {
 
-  bool _pressed = false;
-
-  void onPressedFav() {
-    setState(() {
-      _pressed = !_pressed;
-    });
-    if(Platform.isAndroid){
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(_pressed
-              ? "Agregado a tus favoritos"
-              : "Eliminado de tus favoritos")));
-    }else{
-      new CupertinoAlertDialog(
-        title: Text("Navegando"),
-        content: Text("fsfsfsd"),
-      );
-    }
-
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +24,8 @@ class _FloatingButtonGreen extends State<FloatingButtonGreen> {
       backgroundColor: const Color(0xFF11DA53),
       mini: true,
       tooltip: "Fav",
-      onPressed: onPressedFav,
-      child: Icon(_pressed ? Icons.favorite : Icons.favorite_border),
+      onPressed: widget.onPressed,
+      child: Icon(widget.iconData),
       heroTag: null,
     );
   }
