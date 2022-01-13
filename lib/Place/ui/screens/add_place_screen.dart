@@ -2,8 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:generic_bloc_provider/generic_bloc_provider.dart';
+import 'package:platzi_trips_avanzado/Place/model/place.dart';
 import 'package:platzi_trips_avanzado/Place/ui/widgets/card_image.dart';
 import 'package:platzi_trips_avanzado/Place/ui/widgets/title_input_locaction.dart';
+import 'package:platzi_trips_avanzado/User/bloc/bloc_user.dart';
 import 'package:platzi_trips_avanzado/widgets/button_purple.dart';
 import 'package:platzi_trips_avanzado/widgets/gradient_back.dart';
 import 'package:platzi_trips_avanzado/widgets/text_input.dart';
@@ -23,6 +26,7 @@ class AddPlaceScreen extends StatefulWidget {
 class _AddPlaceScreen extends State<AddPlaceScreen> {
   @override
   Widget build(BuildContext context) {
+    UserBloc userBloc = BlocProvider.of(context);
     final _controllerTitlePlace = TextEditingController();
     final _controllerDescriptionPlace = TextEditingController();
     return Scaffold(
@@ -49,9 +53,9 @@ class _AddPlaceScreen extends State<AddPlaceScreen> {
               ),
               Flexible(
                   child: Container(
-                padding: const EdgeInsets.only(top: 45, left: 20, right: 10),
-                child: TitleHeader(title: "Add a new Place"),
-              ))
+                    padding: const EdgeInsets.only(top: 45, left: 20, right: 10),
+                    child: TitleHeader(title: "Add a new Place"),
+                  ))
             ],
           ),
           Container(
@@ -91,7 +95,19 @@ class _AddPlaceScreen extends State<AddPlaceScreen> {
                 ),
                 Container(
                   width: 70,
-                  child: ButtonPurple(buttonText: "Add Place", onPress: () {}),
+                  child: ButtonPurple(
+                      buttonText: "Add Place",
+                      onPress: () {
+                        userBloc
+                            .updatePlaceData(Place(
+                                name: _controllerTitlePlace.text,
+                                description: _controllerDescriptionPlace.text,
+                                likes: 0))
+                            .whenComplete(() {
+                          print("termini");
+                          Navigator.pop(context);
+                        });
+                      }),
                 )
               ],
             ),

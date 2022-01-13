@@ -20,18 +20,15 @@ class ProfilePlace extends StatelessWidget {
       height: 220.0,
       decoration: BoxDecoration(
           image: DecorationImage(
-              fit: BoxFit.cover,
-              image: NetworkImage(place.uriImage)),
+              fit: BoxFit.cover, image: NetworkImage(place.uriImage!)),
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
           color: Colors.red,
           boxShadow: const <BoxShadow>[
             BoxShadow(
                 color: Colors.black38,
                 blurRadius: 10.0,
-                offset: Offset(0.0, 5.0)
-            )
-          ]
-      ),
+                offset: Offset(0.0, 5.0))
+          ]),
     );
 
     return Stack(
