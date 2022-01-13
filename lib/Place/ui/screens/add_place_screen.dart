@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
@@ -53,9 +52,9 @@ class _AddPlaceScreen extends State<AddPlaceScreen> {
               ),
               Flexible(
                   child: Container(
-                    padding: const EdgeInsets.only(top: 45, left: 20, right: 10),
-                    child: TitleHeader(title: "Add a new Place"),
-                  ))
+                padding: const EdgeInsets.only(top: 45, left: 20, right: 10),
+                child: TitleHeader(title: "Add a new Place"),
+              ))
             ],
           ),
           Container(
@@ -99,15 +98,30 @@ class _AddPlaceScreen extends State<AddPlaceScreen> {
                   child: ButtonPurple(
                       buttonText: "Add Place",
                       onPress: () {
-                        userBloc
-                            .updatePlaceData(Place(
-                                name: _controllerTitlePlace.text,
-                                description: _controllerDescriptionPlace.text,
-                                likes: 0))
-                            .whenComplete(() {
-                          print("termini");
-                          Navigator.pop(context);
-                        });
+                        var user = userBloc.currentUser;
+                        if (user != null) {
+                          String path =
+                              "${user.uid}/${DateTime.now().toString()}.jpg";
+                          userBloc
+                              .uploadFile(path, widget.image!)
+                              .then((value) {
+                            value.whenComplete(() {
+                              var url = value.storage.ref().getDownloadURL();
+                              print(url);
+                              userBloc
+                                  .updatePlaceData(Place(
+                                      name: _controllerTitlePlace.text,
+                                      description:
+                                          _controllerDescriptionPlace.text,
+                                      likes: 0,
+                                      uriImage: url.toString()))
+                                  .whenComplete(() {
+                                print("termino");
+                                Navigator.pop(context);
+                              });
+                            });
+                          });
+                        }
                       }),
                 )
               ],
