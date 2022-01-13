@@ -1,8 +1,8 @@
-import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:platzi_trips_avanzado/Place/model/place.dart';
 import 'package:platzi_trips_avanzado/Place/ui/widgets/card_image.dart';
 import 'package:platzi_trips_avanzado/Place/ui/widgets/title_input_locaction.dart';
@@ -13,7 +13,7 @@ import 'package:platzi_trips_avanzado/widgets/text_input.dart';
 import 'package:platzi_trips_avanzado/widgets/title_header.dart';
 
 class AddPlaceScreen extends StatefulWidget {
-  File? image;
+  XFile? image;
 
   AddPlaceScreen({Key? key, this.image});
 
@@ -66,11 +66,12 @@ class _AddPlaceScreen extends State<AddPlaceScreen> {
                 Container(
                   alignment: Alignment.center,
                   child: CardImage(
-                    pathImage: "assets/img/beach_palm.jpeg",
-                    iconData: Icons.camera,
+                    fileImage: widget.image,
+                    iconData: Icons.camera_alt_outlined,
                     width: 350,
                     height: 250,
                     onPressed: () {},
+                    pathImage: null,
                   ),
                 ),
                 Container(

@@ -16,9 +16,11 @@ class ProfileHeader extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
+              return const CircularProgressIndicator();
             case ConnectionState.waiting:
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             case ConnectionState.active:
+              return showProfileData(snapshot);
             case ConnectionState.done:
               return showProfileData(snapshot);
           }

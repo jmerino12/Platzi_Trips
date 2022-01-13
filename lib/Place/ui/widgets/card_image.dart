@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:platzi_trips_avanzado/widgets/floating_action_button_green.dart';
 
 class CardImage extends StatelessWidget {
@@ -8,7 +11,8 @@ class CardImage extends StatelessWidget {
   final double? marginTop;
   final VoidCallback onPressed;
   final IconData iconData;
-  final String pathImage;
+  final String? pathImage;
+  XFile? fileImage;
 
   CardImage(
       {Key? key,
@@ -17,29 +21,49 @@ class CardImage extends StatelessWidget {
       required this.height,
       required this.onPressed,
       required this.iconData,
+      this.fileImage,
       this.marginLeft,
       this.marginTop});
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-
-    final card = Container(
-      height: height,
-      width: width,
-      margin: EdgeInsets.only(left: marginLeft ?? 0, top: marginTop ?? 0),
-      decoration: BoxDecoration(
-          image:
-              DecorationImage(fit: BoxFit.cover, image: AssetImage(pathImage)),
-          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-          shape: BoxShape.rectangle,
-          boxShadow: const <BoxShadow>[
-            BoxShadow(
-                color: Colors.black38,
-                blurRadius: 15.0,
-                offset: Offset(0.0, 7.0))
-          ]),
-    );
+    var card;
+    if (pathImage != null) {
+      card = Container(
+        height: height,
+        width: width,
+        margin: EdgeInsets.only(left: marginLeft ?? 0, top: marginTop ?? 0),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                fit: BoxFit.cover, image: AssetImage(pathImage!)),
+            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+            shape: BoxShape.rectangle,
+            boxShadow: const <BoxShadow>[
+              BoxShadow(
+                  color: Colors.black38,
+                  blurRadius: 15.0,
+                  offset: Offset(0.0, 7.0))
+            ]),
+      );
+    } else {
+      card = Container(
+        height: height,
+        width: width,
+        margin: EdgeInsets.only(left: marginLeft ?? 0, top: marginTop ?? 0),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                fit: BoxFit.cover, image: FileImage(File(fileImage!.path))),
+            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+            shape: BoxShape.rectangle,
+            boxShadow: const <BoxShadow>[
+              BoxShadow(
+                  color: Colors.black38,
+                  blurRadius: 15.0,
+                  offset: Offset(0.0, 7.0))
+            ]),
+      );
+    }
 
     return Stack(
       alignment: Alignment(0.9, 1.1),
