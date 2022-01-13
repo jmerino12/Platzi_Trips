@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
@@ -5,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:platzi_trips_avanzado/Place/model/place.dart';
 import 'package:platzi_trips_avanzado/Place/repository/firebase_storage_repository.dart';
 import 'package:platzi_trips_avanzado/User/repository/auth_repository.dart';
+import 'package:platzi_trips_avanzado/User/repository/cloud_firestore_api.dart';
 import 'package:platzi_trips_avanzado/User/repository/cloud_firestore_repository.dart';
 
 class UserBloc implements Bloc{
@@ -21,6 +23,11 @@ class UserBloc implements Bloc{
   Stream<User?> get authStatus => streamFirebase;
 
   User? get currentUser => FirebaseAuth.instance.currentUser;
+  Stream<QuerySnapshot> placesListStream = FirebaseFirestore.instance
+      .collection(CloudFirestoreAPI().PLACES)
+      .snapshots();
+
+  Stream<QuerySnapshot> get placesStream => placesListStream;
 
   //CASOS DE USO
 

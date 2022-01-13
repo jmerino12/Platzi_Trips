@@ -14,6 +14,5 @@ class Place {
       required this.name,
       required this.description,
       this.uriImage,
-      this.likes,
-      this.userOwner});
+      this.likes});
 }
