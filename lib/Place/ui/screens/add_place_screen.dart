@@ -107,7 +107,6 @@ class _AddPlaceScreen extends State<AddPlaceScreen> {
                               .then((value) {
                             value.whenComplete(() {
                               var url = value.storage.ref().getDownloadURL();
-                              print(url);
                               userBloc
                                   .updatePlaceData(Place(
                                       name: _controllerTitlePlace.text,
