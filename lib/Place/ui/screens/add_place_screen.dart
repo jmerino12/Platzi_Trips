@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:platzi_trips_avanzado/Place/ui/widgets/card_image.dart';
 import 'package:platzi_trips_avanzado/Place/ui/widgets/title_input_locaction.dart';
+import 'package:platzi_trips_avanzado/widgets/button_purple.dart';
 import 'package:platzi_trips_avanzado/widgets/gradient_back.dart';
 import 'package:platzi_trips_avanzado/widgets/text_input.dart';
 import 'package:platzi_trips_avanzado/widgets/title_header.dart';
@@ -87,6 +88,10 @@ class _AddPlaceScreen extends State<AddPlaceScreen> {
                     hintText: "Add location",
                     iconData: Icons.location_on,
                   ),
+                ),
+                Container(
+                  width: 70,
+                  child: ButtonPurple(buttonText: "Add Place", onPress: () {}),
                 )
               ],
             ),

@@ -1,24 +1,16 @@
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ButtonPurple extends StatelessWidget {
-  void messageAlert(BuildContext context){
-    if(Platform.isAndroid){
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Navegando")));
-    }else{
-      const CupertinoAlertDialog(
-        title: Text("Navegando"),
-      );
-    }
-  }
+  late String buttonText;
+  VoidCallback onPress;
+
+  ButtonPurple({Key? key, required this.buttonText, required this.onPress});
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
-        onTap: (){
-           messageAlert(context);
-        },
+        onTap: onPress,
         child: Container(
           margin: const EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
           height: 50,
@@ -34,10 +26,10 @@ class ButtonPurple extends StatelessWidget {
                   end: FractionalOffset(1.0, 0.6),
                   stops: [0.0, 0.6],
                   tileMode: TileMode.clamp)),
-          child: const Center(
+          child: Center(
             child: Text(
-              "Navigate",
-              style: TextStyle(
+              buttonText,
+              style: const TextStyle(
                   fontSize: 18.0, fontFamily: "Lato", color: Colors.white),
             ),
           ),
