@@ -5,6 +5,7 @@ import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:platzi_trips_avanzado/Place/model/place.dart';
 import 'package:platzi_trips_avanzado/Place/repository/firebase_storage_repository.dart';
+import 'package:platzi_trips_avanzado/Place/ui/widgets/card_image.dart';
 import 'package:platzi_trips_avanzado/User/repository/auth_repository.dart';
 import 'package:platzi_trips_avanzado/User/repository/cloud_firestore_api.dart';
 import 'package:platzi_trips_avanzado/User/repository/cloud_firestore_repository.dart';
@@ -40,6 +41,9 @@ class UserBloc implements Bloc{
           isEqualTo: FirebaseFirestore.instance
               .doc("${CloudFirestoreAPI().USERS}/$uid"))
       .snapshots();
+
+  List<CardImage> buildPlaces(List<DocumentSnapshot> placesListSnapshot) =>
+      _cloudFirestoreRepository.buildPlaces(placesListSnapshot);
 
   //CASOS DE USO
 
