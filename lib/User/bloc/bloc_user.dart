@@ -8,6 +8,7 @@ import 'package:platzi_trips_avanzado/Place/repository/firebase_storage_reposito
 import 'package:platzi_trips_avanzado/User/repository/auth_repository.dart';
 import 'package:platzi_trips_avanzado/User/repository/cloud_firestore_api.dart';
 import 'package:platzi_trips_avanzado/User/repository/cloud_firestore_repository.dart';
+import 'package:platzi_trips_avanzado/User/ui/widgets/profile_place.dart';
 
 class UserBloc implements Bloc{
 
@@ -28,6 +29,9 @@ class UserBloc implements Bloc{
       .snapshots();
 
   Stream<QuerySnapshot> get placesStream => placesListStream;
+
+  List<ProfilePlace> buildPlaces(List<DocumentSnapshot> placesListSnapshot) =>
+      _cloudFirestoreRepository.buildPlaces(placesListSnapshot);
 
   //CASOS DE USO
 

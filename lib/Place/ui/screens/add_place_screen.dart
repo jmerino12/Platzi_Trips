@@ -97,27 +97,23 @@ class _AddPlaceScreen extends State<AddPlaceScreen> {
                   width: 70,
                   child: ButtonPurple(
                       buttonText: "Add Place",
-                      onPress: () {
+                      onPress: () async {
                         var user = userBloc.currentUser;
                         if (user != null) {
-                          String path =
-                              "${user.uid}/${DateTime.now().toString()}.jpg";
-                          userBloc
-                              .uploadFile(path, widget.image!)
-                              .then((value) {
-                            value.whenComplete(() {
-                              var url = value.storage.ref().getDownloadURL();
+                          String uid = user.uid;
+                          String path = "$uid/${DateTime.now().toString()}.jpg";
+                          var task =
+                              await userBloc.uploadFile(path, widget.image!);
+                          var urlImg = task.then((value) {
+                            value.ref.getDownloadURL().then((value) {
                               userBloc
                                   .updatePlaceData(Place(
                                       name: _controllerTitlePlace.text,
                                       description:
                                           _controllerDescriptionPlace.text,
                                       likes: 0,
-                                      uriImage: url.toString()))
-                                  .whenComplete(() {
-                                print("termino");
-                                Navigator.pop(context);
-                              });
+                                      uriImage: value))
+                                  .whenComplete(() => {Navigator.pop(context)});
                             });
                           });
                         }

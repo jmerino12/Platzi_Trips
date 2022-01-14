@@ -50,7 +50,7 @@ class ProfilePlaceInfo extends StatelessWidget {
     );
 
     final steps = Text(
-      'Hearts ${this.place.likes}',
+      'Hearts ${this.place.likes ?? 0}',
       style: const TextStyle(
           fontFamily: 'Lato',
           fontSize: 14.0,
