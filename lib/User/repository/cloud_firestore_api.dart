@@ -51,7 +51,8 @@ class CloudFirestoreAPI {
       profilePlaces.add(ProfilePlace(Place(
           name: p['name'],
           description: p['description'],
-          uriImage: p['photoUrl'])));
+          uriImage: p['photoUrl'],
+          likes: p['likes'])));
     });
 
     return profilePlaces;

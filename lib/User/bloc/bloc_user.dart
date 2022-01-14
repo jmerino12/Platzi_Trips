@@ -33,6 +33,14 @@ class UserBloc implements Bloc{
   List<ProfilePlace> buildPlaces(List<DocumentSnapshot> placesListSnapshot) =>
       _cloudFirestoreRepository.buildPlaces(placesListSnapshot);
 
+  Stream<QuerySnapshot> myPlacesListStream(String uid) => FirebaseFirestore
+      .instance
+      .collection(CloudFirestoreAPI().PLACES)
+      .where("userOwner",
+          isEqualTo: FirebaseFirestore.instance
+              .doc("${CloudFirestoreAPI().USERS}/$uid"))
+      .snapshots();
+
   //CASOS DE USO
 
   Future<User?> signIn() => _auth_repository.singInFirebase();

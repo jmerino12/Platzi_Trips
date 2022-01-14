@@ -1,31 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:generic_bloc_provider/generic_bloc_provider.dart';
-import 'package:platzi_trips_avanzado/User/bloc/bloc_user.dart';
 import 'package:platzi_trips_avanzado/User/model/user.dart';
 import 'package:platzi_trips_avanzado/User/ui/widgets/button_bar.dart';
 import 'package:platzi_trips_avanzado/User/ui/widgets/user_info.dart';
 
 class ProfileHeader extends StatelessWidget {
-  late UserBloc userBloc;
   late User user;
+
+  ProfileHeader({Key? key, required this.user});
 
   @override
   Widget build(BuildContext context) {
-    userBloc = BlocProvider.of(context);
-    return StreamBuilder(
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-              return const CircularProgressIndicator();
-            case ConnectionState.waiting:
-              return const CircularProgressIndicator();
-            case ConnectionState.active:
-              return showProfileData(snapshot);
-            case ConnectionState.done:
-              return showProfileData(snapshot);
-          }
-        },
-        stream: userBloc.streamFirebase);
+    final title = const Text(
+      'Profile',
+      style: TextStyle(
+          fontFamily: 'Lato',
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 30.0),
+    );
+    return Container(
+      margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 50.0),
+      child: Column(
+        children: <Widget>[
+          Row(
+            children: <Widget>[title],
+          ),
+          UserInfo(user),
+          ButtonsBar()
+        ],
+      ),
+    );
   }
 
   Widget showProfileData(AsyncSnapshot snapshot) {
