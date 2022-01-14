@@ -73,11 +73,22 @@ class CloudFirestoreAPI {
         marginLeft: left,
         marginTop: top,
         pathImage: p['photoUrl'],
-        onPressed: () {},
+        onPressed: () {
+          likePlace(p.id);
+        },
         iconData: Icons.favorite_border,
       ));
     });
 
     return myPlaces;
+  }
+
+  Future likePlace(String idPlace) async {
+    Firestore_db.runTransaction((transaction) async {
+      DocumentSnapshot placeDS =
+          await Firestore_db.collection(PLACES).doc(idPlace).get();
+      await transaction
+          .update(placeDS.reference, {"likes": placeDS.get('likes') + 1});
+    });
   }
 }
