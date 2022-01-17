@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:platzi_trips_avanzado/User/model/user.dart';
 
 class Place {
   String? id;
@@ -7,12 +6,14 @@ class Place {
   String description;
   String? uriImage;
   int? likes;
-  User? userOwner;
+  bool? liked;
 
   Place(
       {Key? key,
       required this.name,
       required this.description,
       this.uriImage,
-      this.likes});
+      this.likes,
+      this.liked,
+      this.id});
 }

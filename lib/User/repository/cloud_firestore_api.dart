@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:platzi_trips_avanzado/Place/model/place.dart';
-import 'package:platzi_trips_avanzado/Place/ui/widgets/card_image.dart';
 import 'package:platzi_trips_avanzado/User/model/user.dart' as DomainUser;
 import 'package:platzi_trips_avanzado/User/ui/widgets/profile_place.dart';
 
@@ -35,7 +33,8 @@ class CloudFirestoreAPI {
       'description': place.description,
       'likes': place.likes,
       'photoUrl': place.uriImage,
-      'userOwner': Firestore_db.doc("$USERS/$uid")
+      'userOwner': Firestore_db.doc("$USERS/$uid"),
+      'usersLiked': []
     }).then((DocumentReference dr) {
       dr.get().then((DocumentSnapshot snapshot) {
         DocumentReference refUsers = Firestore_db.collection(USERS).doc(uid);
@@ -60,7 +59,7 @@ class CloudFirestoreAPI {
     return profilePlaces;
   }
 
-  List<CardImage> buildPlaces(List<DocumentSnapshot> placesListSnapshot) {
+  /*List<CardImage> buildPlaces(List<DocumentSnapshot> placesListSnapshot) {
     double width = 300;
     double height = 350;
     double left = 20;
@@ -81,14 +80,43 @@ class CloudFirestoreAPI {
     });
 
     return myPlaces;
+  }*/
+
+  List<Place> buildPlaces(List placesListSnapshot, DomainUser.User user) {
+    List<Place> places = [];
+
+    placesListSnapshot.forEach((p) {
+      Place place = Place(
+          id: p.id,
+          name: p["name"],
+          description: p["description"],
+          uriImage: p["photoUrl"],
+          likes: p["likes"]);
+      List usersLikedRefs = p.get("usersLiked");
+      place.liked = false;
+      usersLikedRefs.forEach((drUL) {
+        if (user.uid == drUL.id) {
+          place.liked = true;
+        }
+      });
+      places.add(place);
+    });
+    return places;
   }
 
-  Future likePlace(String idPlace) async {
-    Firestore_db.runTransaction((transaction) async {
-      DocumentSnapshot placeDS =
-          await Firestore_db.collection(PLACES).doc(idPlace).get();
-      await transaction
-          .update(placeDS.reference, {"likes": placeDS.get('likes') + 1});
+  Future likePlace(Place place, String uid) async {
+    await Firestore_db.collection(PLACES)
+        .doc(place.id)
+        .get()
+        .then((DocumentSnapshot ds) {
+      int likes = ds["likes"];
+
+      Firestore_db.collection(PLACES).doc(place.id).update({
+        'likes': place.liked! ? likes + 1 : likes - 1,
+        'usersLiked': place.liked!
+            ? FieldValue.arrayUnion([Firestore_db.doc("$USERS/$uid")])
+            : FieldValue.arrayRemove([Firestore_db.doc("$USERS/$uid")])
+      });
     });
   }
 }

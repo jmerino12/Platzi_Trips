@@ -5,7 +5,7 @@ import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:platzi_trips_avanzado/Place/model/place.dart';
 import 'package:platzi_trips_avanzado/Place/repository/firebase_storage_repository.dart';
-import 'package:platzi_trips_avanzado/Place/ui/widgets/card_image.dart';
+import 'package:platzi_trips_avanzado/User/model/user.dart' as DomainUser;
 import 'package:platzi_trips_avanzado/User/repository/auth_repository.dart';
 import 'package:platzi_trips_avanzado/User/repository/cloud_firestore_api.dart';
 import 'package:platzi_trips_avanzado/User/repository/cloud_firestore_repository.dart';
@@ -42,8 +42,9 @@ class UserBloc implements Bloc{
               .doc("${CloudFirestoreAPI().USERS}/$uid"))
       .snapshots();
 
-  List<CardImage> buildPlaces(List<DocumentSnapshot> placesListSnapshot) =>
-      _cloudFirestoreRepository.buildPlaces(placesListSnapshot);
+  List<Place> buildPlaces(
+          List<DocumentSnapshot> placesListSnapshot, DomainUser.User user) =>
+      _cloudFirestoreRepository.buildPlaces(placesListSnapshot, user);
 
   //CASOS DE USO
 
@@ -61,6 +62,9 @@ class UserBloc implements Bloc{
 
   Future<UploadTask> uploadFile(String path, XFile image) =>
       _firebasStorageRepository.uploadFile(path, image);
+
+  Future likePlace(Place place, String uid) =>
+      _cloudFirestoreRepository.likePlace(place, uid);
 
   @override
   void dispose() {}
