@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:platzi_trips_avanzado/Place/model/place.dart';
 import 'package:platzi_trips_avanzado/User/ui/widgets/profile_place_info.dart';
@@ -11,7 +12,6 @@ class ProfilePlace extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final photoCard = Container(
       margin: const EdgeInsets.only(
           top: 10.0,
@@ -20,7 +20,8 @@ class ProfilePlace extends StatelessWidget {
       height: 220.0,
       decoration: BoxDecoration(
           image: DecorationImage(
-              fit: BoxFit.cover, image: NetworkImage(place.uriImage!)),
+              fit: BoxFit.cover,
+              image: CachedNetworkImageProvider(place.uriImage!)),
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
           color: Colors.red,
           boxShadow: const <BoxShadow>[

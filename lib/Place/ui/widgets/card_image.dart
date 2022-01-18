@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:platzi_trips_avanzado/widgets/floating_action_button_green.dart';
@@ -13,6 +14,7 @@ class CardImage extends StatelessWidget {
   final IconData iconData;
   final String? pathImage;
   XFile? fileImage;
+  bool internet;
 
   CardImage(
       {Key? key,
@@ -23,7 +25,8 @@ class CardImage extends StatelessWidget {
       required this.iconData,
       this.fileImage,
       this.marginLeft,
-      this.marginTop});
+      this.marginTop,
+      this.internet = true});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +39,8 @@ class CardImage extends StatelessWidget {
         margin: EdgeInsets.only(left: marginLeft ?? 0, top: marginTop ?? 0),
         decoration: BoxDecoration(
             image: DecorationImage(
-                fit: BoxFit.cover, image: NetworkImage(pathImage!)),
+                fit: BoxFit.cover,
+                image: CachedNetworkImageProvider(pathImage!)),
             borderRadius: const BorderRadius.all(Radius.circular(10.0)),
             shape: BoxShape.rectangle,
             boxShadow: const <BoxShadow>[
