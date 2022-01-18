@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -38,12 +40,11 @@ class UserBloc implements Bloc{
       .instance
       .collection(CloudFirestoreAPI().PLACES)
       .where("userOwner",
-          isEqualTo: FirebaseFirestore.instance
-              .doc("${CloudFirestoreAPI().USERS}/$uid"))
+      isEqualTo: FirebaseFirestore.instance
+          .doc("${CloudFirestoreAPI().USERS}/$uid"))
       .snapshots();
 
-  List<Place> buildPlaces(
-          List<DocumentSnapshot> placesListSnapshot, DomainUser.User user) =>
+  List<Place> buildPlaces(List<DocumentSnapshot> placesListSnapshot, DomainUser.User user) =>
       _cloudFirestoreRepository.buildPlaces(placesListSnapshot, user);
 
   //CASOS DE USO
@@ -65,6 +66,12 @@ class UserBloc implements Bloc{
 
   Future likePlace(Place place, String uid) =>
       _cloudFirestoreRepository.likePlace(place, uid);
+
+  StreamController placeSelectedStreamController = StreamController();
+
+  Stream get placeSelectedStream => placeSelectedStreamController.stream;
+
+  StreamSink get placeSelectedSink => placeSelectedStreamController.sink;
 
   @override
   void dispose() {}

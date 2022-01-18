@@ -23,7 +23,7 @@ class ProfilePlace extends StatelessWidget {
               fit: BoxFit.cover,
               image: CachedNetworkImageProvider(place.uriImage!)),
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
-          color: Colors.red,
+          color: Colors.grey,
           boxShadow: const <BoxShadow>[
             BoxShadow(
                 color: Colors.black38,
